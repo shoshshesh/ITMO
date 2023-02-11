@@ -1,0 +1,43 @@
+package expression.generic;
+
+import expression.exceptions.DBZException;
+
+public class IntegerT implements EvaluateInterface<Integer>{
+    @Override
+    public Integer getTypedValue(int x) {
+        return x;
+    }
+
+    @Override
+    public Integer getTypedValue(String x) {
+        return Integer.parseInt(x);
+    }
+
+    @Override
+    public Integer add(Integer x, Integer y) {
+        return x + y;
+    }
+
+    @Override
+    public Integer subtract(Integer x, Integer y) {
+        return x - y;
+    }
+
+    @Override
+    public Integer multiply(Integer x, Integer y) {
+        return x * y;
+    }
+
+    @Override
+    public Integer divide(Integer x, Integer y) {
+        if (y == 0) {
+            throw new DBZException("division by zero in " + x + " / " + y);
+        }
+        return x / y;
+    }
+
+    @Override
+    public Integer negate(Integer x) {
+        return -x;
+    }
+}
