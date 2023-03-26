@@ -1,0 +1,26 @@
+grammar signatures;
+start s;
+
+s : tnf LBRACKET a RBRACKET SEMICOLON;
+
+tnf : TYPE_OR_NAME p TYPE_OR_NAME;
+
+tn : tnf m;
+
+p : POINTER p | EPS;
+
+m : SQUARE_OPEN SQUARE_CLOSE | EPS;
+
+a : tn aPrime | EPS;
+
+aPrime: COMMA tn aPrime | EPS;
+
+LBRACKET: "\\(";
+RBRACKET: "\\)";
+SEMICOLON: ";";
+TYPE_OR_NAME: "[_a-zA-Z]+";
+POINTER: "\\*";
+SQUARE_OPEN: "\\[";
+SQUARE_CLOSE: "\\]";
+COMMA: ",";
+EPS: "eps";

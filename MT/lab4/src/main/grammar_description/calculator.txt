@@ -1,0 +1,86 @@
+grammar calculator;
+start e;
+
+e returns [int val]
+    : t ePrime[t_1.val] {
+        e_0.val = ePrime_2.val;
+      }
+    ;
+
+ePrime [int acc] returns [int val]
+    : PLUS t {
+        ePrime_0.val = acc + t_2.val;
+      } ePrime[ePrime_0.val] {
+        ePrime_0.val = ePrime_3.val;
+      }
+    | MINUS t {
+        ePrime_0.val = acc - t_2.val;
+      } ePrime[ePrime_0.val] {
+        ePrime_0.val = ePrime_3.val;
+      }
+    | EPS {
+        System.out.println("ePrime is empty, cur acc: " + acc);
+        ePrime_0.val = acc;
+      }
+    ;
+
+t returns [int val]
+    : f tPrime [f_1.val] {
+        t_0.val = tPrime_2.val;
+      }
+    ;
+
+tPrime [int acc] returns [int val]
+    : MUL f {
+        tPrime_0.val = acc * f_2.val;
+      } tPrime[tPrime_0.val] {
+        tPrime_0.val = tPrime_3.val;
+      }
+    | DIV f {
+        tPrime_0.val = acc / f_2.val;
+      } tPrime[tPrime_0.val] {
+        tPrime_0.val = tPrime_3.val;
+      }
+    | EPS {
+        System.out.println("tPrime is empty, cur acc: " + acc);
+        tPrime_0.val = acc;
+      }
+    ;
+
+
+f returns [int val]
+    : NUMBER {
+        f_0.val = Integer.parseInt(NUMBER_1);
+      }
+    | LBRACKET e RBRACKET {
+        f_0.val = e_2.val;
+      }
+    | MINUS f {
+        f_0.val = -f_2.val;
+      }
+    | SIN f {
+        f_0.val = (int) Math.sin(f_2.val);
+      }
+    | COS f {
+        f_0.val = (int) Math.cos(f_2.val);
+    }
+    | SQRT f {
+        f_0.val = (int) Math.sqrt(f_2.val);
+    }
+    | ABS f {
+        f_0.val = Math.abs(f_2.val);
+    }
+    ;
+
+PLUS: "\\+";
+MINUS: "-";
+MUL: "\\*";
+DIV: "/";
+SIN: "sin";
+COS: "cos";
+SQRT: "sqrt";
+ABS: "abs";
+NUMBER: "[0-9]+";
+LBRACKET: "\\(";
+RBRACKET: "\\)";
+EPS: "eps";
