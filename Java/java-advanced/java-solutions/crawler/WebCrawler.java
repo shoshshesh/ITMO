@@ -38,7 +38,6 @@ public class WebCrawler implements Crawler {
     public Result download(String url, int depth) {
         final ConcurrentHashMap<String, IOException> errors = new ConcurrentHashMap<>();
         final Set<String> downloaded = ConcurrentHashMap.newKeySet();
-        // :NOTE: ArrayDeque
         Set<String> queue = ConcurrentHashMap.newKeySet();
         queue.add(url);
         while (depth > 0) {
